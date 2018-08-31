@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flaskext.mysql import MySQL
 
 app = Flask(__name__)
@@ -15,7 +15,9 @@ cursor = conn.cursor()
 
 @app.route('/')
 def index():
-    return 'Hello World!'
+    cursor.execute('SELECT * FROM users')
+    data = cursor.fetchone()
+    return jsonify({ 'data': data })
 
 
 if __name__ == '__main__':
