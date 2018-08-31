@@ -17,7 +17,7 @@ cursor = conn.cursor()
 @app.route('/')
 def index():
     return make_response(jsonify({'message': 'Its working!'}), 200)
-    
+
 @app.route('/users')
 def get_users():
     cursor.execute('SELECT * FROM users')
