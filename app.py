@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, make_response
 import db
+import users
 
 app = Flask(__name__)
 
@@ -11,39 +12,10 @@ def index():
 
 
 @app.route('/users')
-def get_users():
-    cursor.execute('SELECT * FROM users')
-    users = cursor.fetchall()
-    if users:
-        all_users = []
-        for i in users:
-            tmp_user = {
-                'id': i[0],
-                'email': i[1],
-                'name': i[2],
-                'contact': i[3]
-            }
-            all_users.append(tmp_user)
-        return make_response(jsonify(all_users), 200)
-    else:
-        return make_response(jsonify({'message': 'Its something went wrong'}), 400)
-
+users.get_users(cursor)
 
 @app.route('/users/<id>', methods=['GET'])
-def get_user_by_id(id):
-    cursor.execute('SELECT * FROM users WHERE id = '+id)
-    user = cursor.fetchone()
-    if user:
-        user = {
-            'id': user[0],
-            'email': user[1],
-            'name': user[2],
-            'contact': user[3]
-        }
-        return make_response(jsonify(user), 200)
-    else:
-        return make_response(jsonify({'message': 'User not found'}), 200)
-
+users.get_user_by_id(cursor, id)
 
 if __name__ == '__main__':
     app.debug = True
