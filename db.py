@@ -9,4 +9,4 @@ def connection(app):
     mysql.init_app(app)
     conn = mysql.connect()
     cursor = conn.cursor()
-    return cursor
+    return cursor, conn

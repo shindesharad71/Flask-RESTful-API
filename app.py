@@ -1,10 +1,10 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request
 import db
 import users
 
 app = Flask(__name__)
 
-cursor = db.connection(app)
+cursor, conn = db.connection(app)
 
 
 @app.route('/')
@@ -12,12 +12,12 @@ def index():
     return make_response(jsonify({'message': 'Its working!'}), 200)
 
 
-@app.route('/users')
+@app.route('/users', methods=['GET', 'POST'])
 def getAllUsers():
-    return users.get_users(cursor)
+    return users.get_users(cursor, conn, request)
 
 
-@app.route('/users/<id>', methods=['GET'])
+@app.route('/users/<id>', methods=['GET', 'POST'])
 def singleUser(id):
     return users.get_user_by_id(cursor, id)
 
