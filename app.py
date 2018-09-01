@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, make_response, request
 import db
+import jwt
 import users
 
 app = Flask(__name__)

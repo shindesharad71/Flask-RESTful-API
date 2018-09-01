@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, make_response
-
+import jwt_config
 
 def get_users(cursor, conn, request):
     if request.method == 'GET':
