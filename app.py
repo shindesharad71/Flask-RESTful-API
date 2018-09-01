@@ -6,16 +6,21 @@ app = Flask(__name__)
 
 cursor = db.connection(app)
 
+
 @app.route('/')
 def index():
     return make_response(jsonify({'message': 'Its working!'}), 200)
 
 
 @app.route('/users')
-users.get_users(cursor)
+def getAllUsers():
+    return users.get_users(cursor)
+
 
 @app.route('/users/<id>', methods=['GET'])
-users.get_user_by_id(cursor, id)
+def singleUser(id):
+    return users.get_user_by_id(cursor, id)
+
 
 if __name__ == '__main__':
     app.debug = True
