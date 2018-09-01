@@ -3,6 +3,7 @@ from flaskext.mysql import MySQL
 
 app = Flask(__name__)
 
+
 def connection():
     mysql = MySQL()
     app.config['MYSQL_DATABASE_USER'] = 'shindesharad71'
@@ -13,6 +14,7 @@ def connection():
     conn = mysql.connect()
     cursor = conn.cursor()
     return cursor
+
 
 cursor = connection()
 
@@ -43,9 +45,9 @@ def get_users():
 
 @app.route('/users/<id>', methods=['GET'])
 def get_user_by_id(id):
-    try:
-        cursor.execute('SELECT * FROM users WHERE id={id}')
-        user = cursor.fetchall()
+    cursor.execute('SELECT * FROM users WHERE id = '+id)
+    user = cursor.fetchone()
+    if user:
         user = {
             'id': user[0],
             'email': user[1],
@@ -53,8 +55,8 @@ def get_user_by_id(id):
             'contact': user[3]
         }
         return make_response(jsonify(user), 200)
-    except Exception as e:
-        print(e)
+    else:
+        return make_response(jsonify({'message': 'User not found'}), 200)
 
 
 if __name__ == '__main__':
