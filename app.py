@@ -1,23 +1,9 @@
 from flask import Flask, jsonify, make_response
-from flaskext.mysql import MySQL
+import db
 
 app = Flask(__name__)
 
-
-def connection():
-    mysql = MySQL()
-    app.config['MYSQL_DATABASE_USER'] = 'shindesharad71'
-    app.config['MYSQL_DATABASE_PASSWORD'] = '1234567890'
-    app.config['MYSQL_DATABASE_DB'] = 'flask71'
-    app.config['MYSQL_DATABASE_HOST'] = 'db4free.net'
-    mysql.init_app(app)
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    return cursor
-
-
-cursor = connection()
-
+cursor = db.connection(app)
 
 @app.route('/')
 def index():
