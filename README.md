@@ -11,12 +11,8 @@ RESTful API build with Flask microframework in Python 3.
 
 ##### 1. Get All Users
 
-```url => /users
-   method => GET
-```
+```url => /users, method => GET```
 
 ##### 2. Get Single User
 
-```url => /users/:id
-   method => GET
-```
+```url => /users/:id, method => GET```
