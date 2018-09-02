@@ -1,4 +1,3 @@
-from subprocess import call
 import os
 
 print('checking for required packages')
