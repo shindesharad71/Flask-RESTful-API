@@ -15,8 +15,10 @@ RESTful API build with Flask microframework in Python 3.
 url => /users, method => GET
 ```
 
-##### 2. Get Single User
+##### 2. For Single User
 
 ```
 url => /users/:id, method => GET
+url => /users/:id, method => DELETE
+url => /users/:id, method => PUT
 ```
