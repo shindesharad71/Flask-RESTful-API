@@ -5,6 +5,7 @@ RESTful API build with Flask microframework in Python 3.
 ### Installation
 
 * Clone repo
+* Rename ```config.example.py``` to ```config.py``` and update values.
 * run ```python3 setup.py``` initially to install requirements and run project.
 * to start app everytime run ```python3 app.py```.
 
