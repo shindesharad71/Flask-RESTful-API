@@ -24,6 +24,6 @@ def singleUser(id):
 
 
 if __name__ == '__main__':
-    # app.debug = True
+    app.debug = True
     app.config['SECRET_KEY'] = 'flask-api'
     app.run(port=8080)

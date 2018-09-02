@@ -58,7 +58,7 @@ def get_user_by_id(cursor, conn, request, id):
             query = 'UPDATE users SET name=%s, email=%s, contact=%s WHERE id=%s'
             cursor.execute(query, (name, email, contact, id))
             conn.commit()
-            if cursor.lastrowid:
+            if conn.affected_rows():
                 return make_response(jsonify({'message': 'User updated!'}), 200)
             else:
                 return make_response(jsonify({'message': 'Something went wrong, try again!'}), 400)
@@ -67,9 +67,7 @@ def get_user_by_id(cursor, conn, request, id):
         query = 'DELETE FROM users WHERE id=%s'
         cursor.execute(query, (id))
         conn.commit()
-        rows = conn.affected_rows()
-        return rows
-        if cursor.lastrowid:
+        if conn.affected_rows():
             return make_response(jsonify({'message': 'User deleted!'}), 200)
         else:
             return make_response(jsonify({'message': 'Something went wrong, try again!'}), 400)
