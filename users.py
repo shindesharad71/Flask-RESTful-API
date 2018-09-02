@@ -34,16 +34,42 @@ def get_users(cursor, conn, request):
                 return make_response(jsonify({'message': 'Something went wrong, try again!'}), 400)
 
 
-def get_user_by_id(cursor, id):
-    cursor.execute('SELECT * FROM users WHERE id = '+id)
-    user = cursor.fetchone()
-    if user:
-        user = {
-            'id': user[0],
-            'email': user[1],
-            'name': user[2],
-            'contact': user[3]
-        }
-        return make_response(jsonify(user), 200)
-    else:
-        return make_response(jsonify({'message': 'User not found'}), 200)
+def get_user_by_id(cursor, conn, request, id):
+    if request.method == 'GET':
+        cursor.execute('SELECT * FROM users WHERE id = '+id)
+        user = cursor.fetchone()
+        if user:
+            user = {
+                'id': user[0],
+                'email': user[1],
+                'name': user[2],
+                'contact': user[3]
+            }
+            return make_response(jsonify(user), 200)
+        else:
+            return make_response(jsonify({'message': 'User not found'}), 200)
+
+    if request.method == 'PUT':
+        post_data = request.get_json()
+        if post_data:
+            name = post_data['name']
+            email = post_data['email']
+            contact = post_data['contact']
+            query = 'UPDATE users SET name=%s, email=%s, contact=%s WHERE id=%s'
+            cursor.execute(query, (name, email, contact, id))
+            conn.commit()
+            if cursor.lastrowid:
+                return make_response(jsonify({'message': 'User updated!'}), 200)
+            else:
+                return make_response(jsonify({'message': 'Something went wrong, try again!'}), 400)
+
+    if request.method == 'DELETE':
+        query = 'DELETE FROM users WHERE id=%s'
+        cursor.execute(query, (id))
+        conn.commit()
+        rows = conn.affected_rows()
+        return rows
+        if cursor.lastrowid:
+            return make_response(jsonify({'message': 'User deleted!'}), 200)
+        else:
+            return make_response(jsonify({'message': 'Something went wrong, try again!'}), 400)

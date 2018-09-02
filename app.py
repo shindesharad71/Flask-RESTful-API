@@ -18,9 +18,9 @@ def getAllUsers():
     return users.get_users(cursor, conn, request)
 
 
-@app.route('/users/<id>', methods=['GET', 'POST'])
+@app.route('/users/<id>', methods=['GET', 'PUT', 'DELETE'])
 def singleUser(id):
-    return users.get_user_by_id(cursor, id)
+    return users.get_user_by_id(cursor, conn, request, id)
 
 
 if __name__ == '__main__':
