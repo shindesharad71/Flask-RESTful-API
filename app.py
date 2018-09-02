@@ -2,6 +2,7 @@ from flask import Flask, jsonify, make_response, request
 import db
 import jwt
 import users
+import config
 
 app = Flask(__name__)
 
@@ -29,6 +30,6 @@ def singleUser(id):
 
 
 if __name__ == '__main__':
-    # app.debug = True
-    app.config['SECRET_KEY'] = 'flask-api'
-    app.run(port=8080)
+    app.debug = config.debug
+    app.config['SECRET_KEY'] = config.secret
+    app.run(port=config.port)

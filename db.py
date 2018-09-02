@@ -1,11 +1,12 @@
 from flaskext.mysql import MySQL
+import config
 
 def connection(app):
     mysql = MySQL()
-    app.config['MYSQL_DATABASE_USER'] = 'shindesharad71'
-    app.config['MYSQL_DATABASE_PASSWORD'] = '1234567890'
-    app.config['MYSQL_DATABASE_DB'] = 'flask71'
-    app.config['MYSQL_DATABASE_HOST'] = 'db4free.net'
+    app.config['MYSQL_DATABASE_USER'] = config.dbuser
+    app.config['MYSQL_DATABASE_PASSWORD'] = config.dbpassword
+    app.config['MYSQL_DATABASE_DB'] = config.dbname
+    app.config['MYSQL_DATABASE_HOST'] = config.dbhost
     mysql.init_app(app)
     conn = mysql.connect()
     cursor = conn.cursor()
